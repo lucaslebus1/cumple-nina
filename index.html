@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Cumpleaños - NINA | ¡Mis 22!</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Tipografías elegantes y primaverales -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#FFFDF9',
+                        blush: {
+                            light: '#FDECEF',
+                            DEFAULT: '#F7C6D0',
+                            medium: '#EE9BB0',
+                            dark: '#D96B84'
+                        },
+                        sage: {
+                            light: '#EBF4EC',
+                            DEFAULT: '#C2DEC6',
+                            medium: '#8EB897',
+                            dark: '#578361'
+                        }
+                    },
+                    fontFamily: {
+                        script: ['"Great Vibes"', 'cursive'],
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Montserrat"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Estilos base y animaciones suaves */
+        body {
+            background-color: #FFFDF9;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(247, 198, 208, 0.35) 0%, transparent 45%),
+                radial-gradient(circle at 85% 30%, rgba(194, 222, 198, 0.35) 0%, transparent 45%),
+                radial-gradient(circle at 20% 80%, rgba(194, 222, 198, 0.3) 0%, transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(247, 198, 208, 0.35) 0%, transparent 45%);
+            overflow-x: hidden;
+        }
+
+        /* Animación de flotación suave para elementos florales */
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(3deg); }
+        }
+        .animate-float {
+            animation: floatSlow 5s ease-in-out infinite;
+        }
+        .animate-float-delayed {
+            animation: floatSlow 6s ease-in-out 1.5s infinite;
+        }
+
+        /* Animación de pulso suave para el botón principal */
+        @keyframes pulseSoft {
+            0%, 100% { transform: scale(1); box-shadow: 0 10px 25px -5px rgba(217, 107, 132, 0.4); }
+            50% { transform: scale(1.03); box-shadow: 0 15px 30px -5px rgba(217, 107, 132, 0.6); }
+        }
+        .btn-pulse {
+            animation: pulseSoft 2.5s infinite;
+        }
+
+        /* Transiciones de entrada de secciones */
+        .reveal-card {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Glassmorphism primaveral */
+        .pastel-glass {
+            background: rgba(255, 255, 255, 0.78);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 12px 35px -10px rgba(139, 115, 120, 0.12);
+        }
+
+        /* Canvas de pétalos/confeti por encima sin bloquear clics */
+        #petal-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 40;
+        }
+    </style>
+</head>
+<body class="font-sans text-stone-700 antialiased selection:bg-blush selection:text-stone-800">
+
+    <!-- Canvas para lluvia de pétalos y brillos primaverales -->
+    <canvas id="petal-canvas"></canvas>
+
+    <!-- PANTALLA DE PORTADA / SOBRE INTERACTIVO -->
+    <div id="cover-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center p-6 bg-gradient-to-br from-[#FDECEF] via-[#FFFDF9] to-[#EBF4EC] transition-all duration-1000 ease-in-out">
+        
+        <!-- Decoración Floral Superior Izquierda -->
+        <svg class="absolute top-0 left-0 w-44 h-44 sm:w-64 sm:h-64 text-sage-medium opacity-70 pointer-events-none animate-float" viewBox="0 0 200 200" fill="none">
+            <path d="M-10,20 C40,10 80,50 70,100 C30,90 0,60 -10,20 Z" fill="#C2DEC6"/>
+            <path d="M20,-10 C60,20 70,70 30,95 C10,60 5,25 20,-10 Z" fill="#8EB897" opacity="0.6"/>
+            <circle cx="65" cy="65" r="22" fill="#F7C6D0"/>
+            <circle cx="85" cy="50" r="18" fill="#EE9BB0" opacity="0.85"/>
+            <circle cx="50" cy="85" r="18" fill="#EE9BB0" opacity="0.85"/>
+            <circle cx="68" cy="68" r="9" fill="#FFFDF9"/>
+            <circle cx="68" cy="68" r="4" fill="#D96B84"/>
+        </svg>
+
+        <!-- Decoración Floral Inferior Derecha -->
+        <svg class="absolute bottom-0 right-0 w-48 h-48 sm:w-64 sm:h-64 opacity-70 pointer-events-none animate-float-delayed" viewBox="0 0 200 200" fill="none">
+            <path d="M210,180 C160,190 120,150 130,100 C170,110 200,140 210,180 Z" fill="#C2DEC6"/>
+            <path d="M180,210 C140,180 130,130 170,105 C190,140 195,175 180,210 Z" fill="#8EB897" opacity="0.6"/>
+            <circle cx="135" cy="135" r="24" fill="#F7C6D0"/>
+            <circle cx="115" cy="150" r="18" fill="#EE9BB0" opacity="0.85"/>
+            <circle cx="150" cy="115" r="18" fill="#EE9BB0" opacity="0.85"/>
+            <circle cx="133" cy="133" r="10" fill="#FFFDF9"/>
+            <circle cx="133" cy="133" r="4" fill="#D96B84"/>
+        </svg>
+
+        <!-- Tarjeta Central de Portada -->
+        <div class="relative max-w-md w-full pastel-glass rounded-3xl p-8 sm:p-10 text-center border-2 border-white shadow-xl">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sage-light text-sage-dark text-xs font-semibold tracking-widest uppercase mb-4">
+                <span>🌸</span> Invitación Especial <span>🌸</span>
+            </div>
+
+            <p class="font-serif italic text-lg sm:text-xl text-stone-500 mb-1">Estás invitado a celebrar</p>
+            <h2 class="font-serif text-2xl sm:text-3xl font-bold text-stone-700 tracking-wide">Mi Cumpleaños</h2>
+            
+            <div class="my-3">
+                <span class="font-script text-7xl sm:text-8xl text-blush-dark drop-shadow-sm block leading-none">Nina</span>
+            </div>
+
+            <div class="flex items-center justify-center gap-3 my-4">
+                <span class="h-[1px] w-12 bg-sage-medium"></span>
+                <span class="font-serif font-bold text-lg text-sage-dark bg-sage-light/80 px-4 py-1 rounded-full">¡Mis 22 Años!</span>
+                <span class="h-[1px] w-12 bg-sage-medium"></span>
+            </div>
+
+            <p class="text-sm text-stone-500 mb-7 leading-relaxed">
+                Preparé una tarde muy linda para festejar juntos. Tocá el botón para abrir tu tarjeta.
+            </p>
+
+            <button id="open-invite-btn" class="btn-pulse w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-blush-medium to-blush-dark text-white font-semibold text-base tracking-wide shadow-lg hover:brightness-105 active:scale-95 transition-all flex items-center justify-center gap-2.5 mx-auto cursor-pointer">
+                <span>Abrir Invitación</span>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 19v-8.93a2 2 0 01.89-1.664l7-4.666a2 2 0 012.22 0l7 4.666A2 2 0 0121 10.07V19M3 19a2 2 0 002 2h14a2 2 0 002-2M3 19l6.75-4.5M21 19l-6.75-4.5M3 10l6.75 4.5M21 10l-6.75 4.5m0 0l-1.14.76a2 2 0 01-2.22 0l-1.14-.76"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- BOTÓN FLOTANTE DE MÚSICA -->
+    <button id="music-toggle-btn" title="Activar / Silenciar música" class="hidden fixed bottom-5 right-5 z-30 w-12 h-12 rounded-full bg-white/90 backdrop-blur-md border border-blush text-blush-dark shadow-lg flex items-center justify-center hover:scale-105 active:scale-95 transition-all cursor-pointer">
+        <!-- Ícono sonido activado -->
+        <svg id="icon-sound-on" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
+        </svg>
+        <!-- Ícono sonido silenciado -->
+        <svg id="icon-sound-off" class="w-6 h-6 hidden text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" clip-rule="evenodd"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/>
+        </svg>
+    </button>
+
+    <!-- CONTENIDO PRINCIPAL DE LA INVITACIÓN -->
+    <main id="main-content" class="hidden max-w-xl mx-auto px-4 py-8 sm:py-12 space-y-7 relative z-10">
+
+        <!-- 1. ENCABEZADO PRINCIPAL FLOREADO -->
+        <section class="reveal-card pastel-glass rounded-3xl p-7 sm:p-10 text-center relative overflow-hidden">
+            <!-- Guirnalda floral superior SVG -->
+            <div class="flex justify-center mb-3">
+                <svg class="w-48 h-14" viewBox="0 0 240 60" fill="none">
+                    <!-- Ramitas verde pastel -->
+                    <path d="M20,40 Q70,15 120,30 Q170,15 220,40" stroke="#8EB897" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                    <ellipse cx="55" cy="24" rx="10" ry="5" transform="rotate(-25 55 24)" fill="#C2DEC6"/>
+                    <ellipse cx="85" cy="20" rx="9" ry="4.5" transform="rotate(-10 85 20)" fill="#8EB897" opacity="0.7"/>
+                    <ellipse cx="155" cy="20" rx="9" ry="4.5" transform="rotate(10 155 20)" fill="#8EB897" opacity="0.7"/>
+                    <ellipse cx="185" cy="24" rx="10" ry="5" transform="rotate(25 185 24)" fill="#C2DEC6"/>
+                    <!-- Flor central -->
+                    <circle cx="120" cy="28" r="11" fill="#F7C6D0"/>
+                    <circle cx="111" cy="23" r="8" fill="#EE9BB0"/>
+                    <circle cx="129" cy="23" r="8" fill="#EE9BB0"/>
+                    <circle cx="114" cy="34" r="8" fill="#EE9BB0"/>
+                    <circle cx="126" cy="34" r="8" fill="#EE9BB0"/>
+                    <circle cx="120" cy="28" r="5" fill="#FFFDF9"/>
+                    <circle cx="120" cy="28" r="2.5" fill="#D96B84"/>
+                    <!-- Florecitas laterales -->
+                    <circle cx="70" cy="24" r="6" fill="#F7C6D0"/>
+                    <circle cx="70" cy="24" r="2" fill="#D96B84"/>
+                    <circle cx="170" cy="24" r="6" fill="#F7C6D0"/>
+                    <circle cx="170" cy="24" r="2" fill="#D96B84"/>
+                </svg>
+            </div>
+
+            <p class="uppercase tracking-[0.25em] text-xs font-semibold text-sage-dark mb-2">¡Festejamos juntos!</p>
+            <h1 class="font-serif text-3xl sm:text-4xl font-bold text-stone-700 mb-1">Mi Cumpleaños</h1>
+            
+            <div class="my-2">
+                <span class="font-script text-7xl sm:text-8xl text-blush-dark block leading-tight">NINA</span>
+            </div>
+
+            <div class="inline-block px-6 py-2 rounded-full bg-gradient-to-r from-blush-light via-white to-sage-light border border-blush/50 shadow-sm mt-1 mb-4">
+                <span class="font-serif font-bold text-xl text-blush-dark">22 Años</span>
+            </div>
+
+            <p class="text-stone-600 text-sm sm:text-base max-w-md mx-auto leading-relaxed">
+                Llegan los 22 y quiero compartir este día tan especial con las personas que más quiero. ¡Te espero para brindar, reír y pasar una tarde hermosa!
+            </p>
+        </section>
+
+        <!-- 2. CUENTA REGRESIVA EN VIVO -->
+        <section class="reveal-card pastel-glass rounded-3xl p-6 sm:p-8 text-center">
+            <div class="flex items-center justify-center gap-2 text-sage-dark font-semibold text-xs uppercase tracking-widest mb-4">
+                <span>🌿</span>
+                <span>Falta muy poco para el brindis</span>
+                <span>🌿</span>
+            </div>
+
+            <div id="countdown-grid" class="grid grid-cols-4 gap-2.5 sm:gap-4 max-w-md mx-auto">
+                <div class="bg-gradient-to-b from-blush-light to-white rounded-2xl p-3 sm:p-4 border border-blush/60 shadow-sm">
+                    <span id="cd-days" class="block font-serif text-2xl sm:text-4xl font-bold text-blush-dark">00</span>
+                    <span class="text-[11px] sm:text-xs font-medium text-stone-500 uppercase tracking-wider mt-1 block">Días</span>
+                </div>
+                <div class="bg-gradient-to-b from-sage-light to-white rounded-2xl p-3 sm:p-4 border border-sage/60 shadow-sm">
+                    <span id="cd-hours" class="block font-serif text-2xl sm:text-4xl font-bold text-sage-dark">00</span>
+                    <span class="text-[11px] sm:text-xs font-medium text-stone-500 uppercase tracking-wider mt-1 block">Horas</span>
+                </div>
+                <div class="bg-gradient-to-b from-blush-light to-white rounded-2xl p-3 sm:p-4 border border-blush/60 shadow-sm">
+                    <span id="cd-minutes" class="block font-serif text-2xl sm:text-4xl font-bold text-blush-dark">00</span>
+                    <span class="text-[11px] sm:text-xs font-medium text-stone-500 uppercase tracking-wider mt-1 block">Min</span>
+                </div>
+                <div class="bg-gradient-to-b from-sage-light to-white rounded-2xl p-3 sm:p-4 border border-sage/60 shadow-sm">
+                    <span id="cd-seconds" class="block font-serif text-2xl sm:text-4xl font-bold text-sage-dark">00</span>
+                    <span class="text-[11px] sm:text-xs font-medium text-stone-500 uppercase tracking-wider mt-1 block">Seg</span>
+                </div>
+            </div>
+
+            <p id="countdown-status" class="hidden mt-4 font-serif italic text-lg text-blush-dark font-semibold">
+                ¡Hoy es el gran día! ¡Te espero para festejar! 🎉🌸
+            </p>
+        </section>
+
+        <!-- 3. CUÁNDO Y DÓNDE -->
+        <section class="reveal-card pastel-glass rounded-3xl p-6 sm:p-8 space-y-6">
+            <h2 class="font-serif text-2xl font-bold text-center text-stone-700">¿Cuándo y Dónde?</h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <!-- Tarjeta Fecha y Hora -->
+                <div class="rounded-2xl bg-blush-light/60 border border-blush/50 p-5 text-center flex flex-col items-center justify-center">
+                    <div class="w-12 h-12 rounded-full bg-white text-blush-dark flex items-center justify-center shadow-sm mb-3">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <p class="text-xs uppercase tracking-wider font-semibold text-blush-dark mb-1">Fecha y Hora</p>
+                    <p class="font-serif text-lg font-bold text-stone-800">Viernes 4 de Diciembre</p>
+                    <p class="text-sm font-medium text-stone-600 mt-0.5">A partir de las 18:00 hs</p>
+                </div>
+
+                <!-- Tarjeta Lugar -->
+                <div class="rounded-2xl bg-sage-light/70 border border-sage/60 p-5 text-center flex flex-col items-center justify-center">
+                    <div class="w-12 h-12 rounded-full bg-white text-sage-dark flex items-center justify-center shadow-sm mb-3">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                    </div>
+                    <p class="text-xs uppercase tracking-wider font-semibold text-sage-dark mb-1">Lugar del Festejo</p>
+                    <p class="font-serif text-lg font-bold text-stone-800">En mi casa</p>
+                    <p class="text-sm font-medium text-stone-600 mt-0.5">Calle 326 N° 486</p>
+                </div>
+            </div>
+
+            <!-- Botón Google Maps -->
+            <div class="text-center pt-1">
+                <a href="https://www.google.com/maps/search/?api=1&query=Calle+326+486,+Avellaneda,+Santa+Fe" target="_blank" rel="noopener noreferrer" 
+                   class="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-7 py-3.5 rounded-full bg-sage-dark text-white font-semibold text-sm shadow-md hover:bg-[#497052] active:scale-95 transition-all">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
+                    </svg>
+                    <span>Cómo llegar (Ver en Google Maps)</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- 4. DATOS IMPORTANTES / CONSIGNAS PARA INVITADOS -->
+        <section class="reveal-card pastel-glass rounded-3xl p-6 sm:p-8">
+            <div class="text-center mb-6">
+                <span class="text-xs font-semibold uppercase tracking-widest text-blush-dark">Para tener en cuenta</span>
+                <h2 class="font-serif text-2xl font-bold text-stone-700 mt-1">Detalles Importantes</h2>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <!-- Consigna 1: Regalo -->
+                <div class="rounded-2xl bg-white/90 border-2 border-blush/50 p-5 flex flex-col items-center text-center shadow-sm hover:border-blush-medium transition-colors">
+                    <div class="w-14 h-14 rounded-2xl bg-blush-light flex items-center justify-center text-3xl mb-3 shadow-inner">
+                        🎁
+                    </div>
+                    <h3 class="font-serif font-bold text-lg text-stone-800 mb-1">Regalito</h3>
+                    <p class="text-sm text-stone-600 leading-relaxed">
+                        ¡No te olvides de traer un <strong>regalo para la cumpleañera</strong>! ✨
+                    </p>
+                </div>
+
+                <!-- Consigna 2: Bebida -->
+                <div class="rounded-2xl bg-white/90 border-2 border-sage/60 p-5 flex flex-col items-center text-center shadow-sm hover:border-sage-medium transition-colors">
+                    <div class="w-14 h-14 rounded-2xl bg-sage-light flex items-center justify-center text-3xl mb-3 shadow-inner">
+                        🥂
+                    </div>
+                    <h3 class="font-serif font-bold text-lg text-stone-800 mb-1">Bebida</h3>
+                    <p class="text-sm text-stone-600 leading-relaxed">
+                        Acordate de <strong>traer bebida</strong> (lo que te guste tomar para brindar). 🍹
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. CONFIRMACIÓN DE ASISTENCIA (WHATSAPP) -->
+        <section class="reveal-card pastel-glass rounded-3xl p-6 sm:p-8 text-center relative overflow-hidden">
+            <div class="w-14 h-14 rounded-full bg-gradient-to-tr from-blush-light to-sage-light flex items-center justify-center mx-auto mb-3 text-2xl shadow-sm">
+                💌
+            </div>
+            
+            <h2 class="font-serif text-2xl font-bold text-stone-700 mb-2">Confirmar Asistencia</h2>
+            <p class="text-sm text-stone-600 max-w-sm mx-auto mb-5 leading-relaxed">
+                Por favor confirmame si venís así organizo todo lindo. Podés poner tu nombre abajo y enviarme un WhatsApp directo:
+            </p>
+
+            <!-- Campo opcional para el nombre del invitado -->
+            <div class="max-w-sm mx-auto mb-4">
+                <input type="text" id="guest-name" placeholder="Tu nombre y apellido (opcional)" 
+                       class="w-full px-4 py-3 rounded-2xl bg-white/90 border border-sage/80 text-stone-700 placeholder-stone-400 text-sm focus:outline-none focus:ring-2 focus:ring-blush-medium text-center transition-all">
+            </div>
+
+            <button id="rsvp-whatsapp-btn" 
+                    class="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-[#25D366] to-[#1EBE5D] text-white font-semibold text-base shadow-lg hover:brightness-105 active:scale-95 transition-all inline-flex items-center justify-center gap-2.5 cursor-pointer">
+                <!-- Ícono WhatsApp SVG -->
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                    <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824zm-3.423-14.416c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964.984-3.595c-.607-1.052-.927-2.246-.926-3.468.001-3.825 3.113-6.937 6.937-6.937 1.856.001 3.598.723 4.907 2.034 1.31 1.311 2.031 3.054 2.03 4.908-.001 3.825-3.113 6.938-6.937 6.938z"/>
+                </svg>
+                <span>Confirmar por WhatsApp</span>
+            </button>
+
+            <p class="text-xs text-stone-400 mt-3">
+                Se abrirá tu WhatsApp con el mensaje listo para enviar a Nina
+            </p>
+        </section>
+
+        <!-- PIE DE PÁGINA -->
+        <footer class="text-center pb-8 pt-2 space-y-2">
+            <p class="font-script text-4xl text-blush-dark">¡Te espero!</p>
+            <p class="text-xs text-stone-400 tracking-wider uppercase">Nina • Mis 22 • 4 de Diciembre</p>
+        </footer>
+
+    </main>
+
+    <!-- LÓGICA INTERACTIVA, MÚSICA AMBIENTAL, PÉTALOS Y CUENTA REGRESIVA -->
+    <script>
+        // ==========================================
+        // 1. CONFIGURACIÓN DEL EVENTO
+        // ==========================================
+        // Fecha: 4 de Diciembre de 2026 a las 18:00 hs (Hora Argentina -03:00)
+        const EVENT_DATE = new Date('2026-12-04T18:00:00-03:00').getTime();
+        const WHATSAPP_NUMBER = '5493482235658';
+
+        // ==========================================
+        // 2. SINTETIZADOR DE MELODÍA PRIMAVERAL SUAVE (Web Audio API)
+        // ==========================================
+        let audioCtx = null;
+        let isPlayingMusic = false;
+        let melodyInterval = null;
+
+        // Notas de una melodía dulce tipo cajita musical / arpa primaveral (en Hz)
+        const springMelody = [
+            523.25, 659.25, 783.99, 987.77, // C5, E5, G5, B5
+            880.00, 783.99, 659.25, 587.33, // A5, G5, E5, D5
+            523.25, 587.33, 659.25, 783.99, // C5, D5, E5, G5
+            659.25, 587.33, 523.25, 0       // E5, D5, C5, pausa
+        ];
+        let noteIndex = 0;
+
+        function playSoftNote(freq) {
+            if (!audioCtx || !isPlayingMusic || freq === 0) return;
+
+            const now = audioCtx.currentTime;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, now);
+
+            // Envolvente suave tipo campana / arpa
+            gain.gain.setValueAtTime(0.001, now);
+            gain.gain.exponentialRampToValueAtTime(0.06, now + 0.08);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.4);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start(now);
+            osc.stop(now + 1.45);
+        }
+
+        function startSpringMusic() {
+            try {
+                if (!audioCtx) {
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    audioCtx = new AudioContext();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                isPlayingMusic = true;
+                updateMusicIcon();
+
+                if (!melodyInterval) {
+                    playSoftNote(springMelody[noteIndex]);
+                    noteIndex = (noteIndex + 1) % springMelody.length;
+
+                    melodyInterval = setInterval(() => {
+                        if (isPlayingMusic) {
+                            playSoftNote(springMelody[noteIndex]);
+                            noteIndex = (noteIndex + 1) % springMelody.length;
+                        }
+                    }, 650);
+                }
+            } catch (e) {
+                console.warn('Audio no soportado o bloqueado:', e);
+            }
+        }
+
+        function toggleMusic() {
+            if (!audioCtx) {
+                startSpringMusic();
+                return;
+            }
+            isPlayingMusic = !isPlayingMusic;
+            if (isPlayingMusic && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            updateMusicIcon();
+        }
+
+        function updateMusicIcon() {
+            const iconOn = document.getElementById('icon-sound-on');
+            const iconOff = document.getElementById('icon-sound-off');
+            if (isPlayingMusic) {
+                iconOn.classList.remove('hidden');
+                iconOff.classList.add('hidden');
+            } else {
+                iconOn.classList.add('hidden');
+                iconOff.classList.remove('hidden');
+            }
+        }
+
+        // ==========================================
+        // 3. ANIMACIÓN DE PÉTALOS ROSADOS Y HOJITAS VERDES
+        // ==========================================
+        const canvas = document.getElementById('petal-canvas');
+        const ctx = canvas.getContext('2d');
+        let petals = [];
+        let animationActive = false;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        const petalColors = [
+            'rgba(247, 198, 208, 0.85)', // Rosado pastel
+            'rgba(238, 155, 176, 0.75)', // Rosa medio
+            'rgba(194, 222, 198, 0.85)', // Verde salvia pastel
+            'rgba(253, 236, 239, 0.9)'   // Rosa muy clarito
+        ];
+
+        function createPetals(count = 35) {
+            petals = [];
+            for (let i = 0; i < count; i++) {
+                petals.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    size: Math.random() * 7 + 5,
+                    speedY: Math.random() * 1.2 + 0.6,
+                    speedX: Math.random() * 1 - 0.5,
+                    angle: Math.random() * Math.PI * 2,
+                    spin: (Math.random() - 0.5) * 0.03,
+                    color: petalColors[Math.floor(Math.random() * petalColors.length)]
+                });
+            }
+        }
+
+        function animatePetals() {
+            if (!animationActive) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            petals.forEach(p => {
+                p.y += p.speedY;
+                p.x += p.speedX + Math.sin(p.angle) * 0.4;
+                p.angle += p.spin;
+
+                if (p.y > canvas.height + 15) {
+                    p.y = -15;
+                    p.x = Math.random() * canvas.width;
+                }
+
+                ctx.save();
+                ctx.translate(p.x, p.y);
+                ctx.rotate(p.angle);
+                ctx.fillStyle = p.color;
+                ctx.beginPath();
+                // Forma orgánicade pétalo
+                ctx.ellipse(0, 0, p.size, p.size * 0.55, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            });
+
+            requestAnimationFrame(animatePetals);
+        }
+
+        // ==========================================
+        // 4. CUENTA REGRESIVA EN TIEMPO REAL
+        // ==========================================
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = EVENT_DATE - now;
+
+            if (distance <= 0) {
+                document.getElementById('cd-days').textContent = '00';
+                document.getElementById('cd-hours').textContent = '00';
+                document.getElementById('cd-minutes').textContent = '00';
+                document.getElementById('cd-seconds').textContent = '00';
+                document.getElementById('countdown-status').classList.remove('hidden');
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+            document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('cd-minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('cd-seconds').textContent = String(seconds).padStart(2, '0');
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // ==========================================
+        // 5. INTERACCIONES DE BOTONES
+        // ==========================================
+        const coverScreen = document.getElementById('cover-screen');
+        const mainContent = document.getElementById('main-content');
+        const openInviteBtn = document.getElementById('open-invite-btn');
+        const musicToggleBtn = document.getElementById('music-toggle-btn');
+        const rsvpBtn = document.getElementById('rsvp-whatsapp-btn');
+
+        // Abrir invitación
+        openInviteBtn.addEventListener('click', () => {
+            // Iniciar música suave
+            startSpringMusic();
+
+            // Iniciar lluvia suave de pétalos
+            animationActive = true;
+            createPetals(32);
+            animatePetals();
+
+            // Desvanecer portada y mostrar tarjeta
+            coverScreen.style.opacity = '0';
+            coverScreen.style.transform = 'scale(1.05)';
+
+            setTimeout(() => {
+                coverScreen.classList.add('hidden');
+                mainContent.classList.remove('hidden');
+                musicToggleBtn.classList.remove('hidden');
+
+                // Animar aparición escalonada de las tarjetas
+                const cards = document.querySelectorAll('.reveal-card');
+                cards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.classList.add('visible');
+                    }, index * 180);
+                });
+            }, 650);
+        });
+
+        // Botón de silenciar/activar música
+        musicToggleBtn.addEventListener('click', toggleMusic);
+
+        // Botón de confirmar asistencia por WhatsApp
+        rsvpBtn.addEventListener('click', () => {
+            const guestNameInput = document.getElementById('guest-name').value.trim();
+            let message = '';
+
+            if (guestNameInput) {
+                message = `¡Hola Nina! 🌸 Soy *${guestNameInput}* y quiero confirmar mi asistencia a tu cumple de 22 el viernes 4 de diciembre a las 18 hs. ¡Nos vemos ahí! 🥂🎁`;
+            } else {
+                message = `¡Hola Nina! 🌸 Quiero confirmar mi asistencia a tu cumple de 22 el viernes 4 de diciembre a las 18 hs. ¡Nos vemos ahí! 🥂🎁`;
+            }
+
+            const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+        });
+    </script>
+</body>
+</html>
